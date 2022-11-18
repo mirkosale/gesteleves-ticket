@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * Auteur : Emilien Charpié
  * Date : 29.03.2022
  * Description :  File that take the informations from the database
@@ -119,7 +119,7 @@ class Database {
      */
     public function insertTicket($title, $description, $status, $priority, $resolutionDate, $type){
         // Get the informations of the user
-        $queryRequest = "INSERT INTO `t_ticket` (`ticTitle`, `ticDescription`, `ticStatut`, `ticPriority`, `ticResolutionDate`, `idType`)
+        $queryRequest = "INSERT INTO `t_ticket` (`ticTitle`, `ticDescription`, `ticStatut`, `ticPriority`, `ticResolutionDate`, `ticOpenDate`, `idType`)
         VALUES (:title, :description, :status, :priority, :resolutionDate, :type);";
         // Set an array with the binds values
         $arrayBinds = array(
@@ -128,6 +128,7 @@ class Database {
             array("varName" => "status", "value" => $title, "status" => PDO::PARAM_STR),
             array("varName" => "priority", "value" => $title, "priority" => PDO::PARAM_STR),
             array("varName" => "resolutionDate", "value" => $title, "resolutionDate" => PDO::PARAM_STR),
+            array("varName" => "openDate", "value" => $title, "openDate" => PDO::PARAM_STR),
             array("varName" => "type", "value" => $type, "type" => PDO::PARAM_INT)
         );
         // Insert the user
@@ -150,16 +151,14 @@ class Database {
     }
 
     /**
-     * Select a ticket
+     * Select last 10 tickets
      */
-    public function selectTicketsFromUser(){
-        // Get the informations of the user
-        $queryRequest = "SELECT * FROM t_ticket JOIN t_user on ";
- 
+    public function selectLastTenTickets(){
+        $queryRequest = "SELECT * FROM t_ticket ORDER BY ticOpenDate DESC LIMIT 10";
+
         // Execute the request
         $usersReturned = $this->querySimpleExecute($queryRequest);
-        //return the array
-        return $usersReturned;
+        return $usersRetruned;
     }
  }
 ?>
