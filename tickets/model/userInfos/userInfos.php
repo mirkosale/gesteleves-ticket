@@ -3,8 +3,8 @@
 class connexionValues {
     
     private $host = 'localhost';
-    private $user = 'dbUserTickets';
-    private $dbname = 'dbTickets';
+    private $user = 'dbTickets_user';
+    private $dbname = 'db_Tickets';
     private $port = 'ServerPort';
 
     public function getValues(){
