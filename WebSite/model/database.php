@@ -1,7 +1,6 @@
 <?php
 
 /**
- * 
  * Auteur : Emilien Charpié
  * Date : 29.03.2022
  * Description :  File that take the informations from the database
@@ -89,7 +88,7 @@ class Database {
     /**
      * Select all the users
      */
-    public function TesteSipmle(){
+    public function testeSipmle(){
         // Get the informations of the user
         $queryRequest = "SELECT * FROM t_users";
         // Execute the request
@@ -101,7 +100,7 @@ class Database {
     /**
      * Insert a user to the database
      */
-    public function TestPrepare($email, $password, $username){
+    public function testPrepare($email, $password, $username){
         // Get the informations of the user
         $queryRequest = "INSERT INTO `t_users` (`useEmail`, `usePassword`, `useUsername`)
         VALUES (:email, :password, :username);";
@@ -113,6 +112,54 @@ class Database {
         );
         // Insert the user
         $this->queryPrepareExecute($queryRequest, $arrayBinds);
+    }
+
+    /**
+     * Insert a user to the database
+     */
+    public function insertTicket($title, $description, $status, $priority, $resolutionDate, $type){
+        // Get the informations of the user
+        $queryRequest = "INSERT INTO `t_ticket` (`ticTitle`, `ticDescription`, `ticStatut`, `ticPriority`, `ticResolutionDate`, `idType`)
+        VALUES (:title, :description, :status, :priority, :resolutionDate, :type);";
+        // Set an array with the binds values
+        $arrayBinds = array(
+            array("varName" => "title", "value" => $title, "type" => PDO::PARAM_STR),
+            array("varName" => "description", "value" => $description, "type" => PDO::PARAM_STR),
+            array("varName" => "status", "value" => $title, "status" => PDO::PARAM_STR),
+            array("varName" => "priority", "value" => $title, "priority" => PDO::PARAM_STR),
+            array("varName" => "resolutionDate", "value" => $title, "resolutionDate" => PDO::PARAM_STR),
+            array("varName" => "type", "value" => $type, "type" => PDO::PARAM_INT)
+        );
+        // Insert the user
+        $this->queryPrepareExecute($queryRequest, $arrayBinds);
+    }
+
+    /**
+     * Select a ticket
+     */
+    public function selectOneTicket($id){
+        // Get the informations of the user
+        $queryRequest = "SELECT * FROM t_ticket WHERE idTicket = :id";
+        $binds = [
+            ["name" => "id", "value" => $id, "type" => PDO::PARAM_INT]
+        ];
+        // Execute the request
+        $usersReturned = $this->queryPrepareExecute($queryRequest, $binds);
+        //return the array
+        return $usersReturned;
+    }
+
+    /**
+     * Select a ticket
+     */
+    public function selectTicketsFromUser(){
+        // Get the informations of the user
+        $queryRequest = "SELECT * FROM t_ticket JOIN t_user on ";
+ 
+        // Execute the request
+        $usersReturned = $this->querySimpleExecute($queryRequest);
+        //return the array
+        return $usersReturned;
     }
  }
 ?>
