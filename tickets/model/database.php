@@ -140,7 +140,7 @@ class Database {
      */
     public function selectOneTicket($id){
         // Get the informations of the user
-        $queryRequest = "SELECT * FROM t_ticket WHERE idTicket = :id";
+        $queryRequest = "SELECT * FROM t_ticket as `t` JOIN t_user as `u` on t.idUser = u.idUser WHERE idTicket = :id ";
         $binds = [
             ["name" => "id", "value" => $id, "type" => PDO::PARAM_INT]
         ];
@@ -158,7 +158,18 @@ class Database {
 
         // Execute the request
         $usersReturned = $this->querySimpleExecute($queryRequest);
-        return $usersRetruned;
+        return $usersReturned;
+    }
+
+    /**
+     * Select last 10 tickets
+     */
+    public function selectTenHighestPriorityTickets(){
+        $queryRequest = "SELECT * FROM t_ticket ORDER BY ticPriority DESC LIMIT 10";
+
+        // Execute the request
+        $usersReturned = $this->querySimpleExecute($queryRequest);
+        return $usersReturned;
     }
  }
 ?>
