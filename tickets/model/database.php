@@ -117,10 +117,10 @@ class Database {
     /**
      * Insert a user to the database
      */
-    public function insertTicket($title, $description, $status, $priority, $openDate, $type, $user){
+    public function insertTicket($title, $description, $status, $priority, $openDate, $user, $type){
         // Get the informations of the user
-        $queryRequest = "INSERT INTO `t_ticket` (`ticTitle`, `ticDescription`, `ticStatut`, `ticPriority`, `ticResolutionDate`, `ticOpenDate`, `idType`)
-        VALUES (:title, :description, :status, :priority, :resolutionDate, :type);";
+        $queryRequest = "INSERT INTO `t_ticket` (`ticTitle`, `ticDescription`, `ticFilename` , `idStatus`, `idPriority`, `ticOpenDate`, `idUSER`, `idType`)
+        VALUES (:title, :description, :filename, :status, :priority, :openDate, :user, :type);";
         // Set an array with the binds values
         $arrayBinds = array(
             array("varName" => "title", "value" => $title, "type" => PDO::PARAM_STR),
