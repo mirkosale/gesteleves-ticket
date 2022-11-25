@@ -119,7 +119,7 @@ class Database {
      */
     public function insertTicket($title, $description, $status, $priority, $openDate, $user, $type){
         // Get the informations of the user
-        $queryRequest = "INSERT INTO `t_ticket` (`ticTitle`, `ticDescription`, `ticFilename` , `idStatus`, `idPriority`, `ticOpenDate`, `idUSER`, `idType`)
+        $queryRequest = "INSERT INTO `t_ticket` (`ticTitle`, `ticDescription`, `ticFilename` , `idStatus`, `idPriority`, `ticOpenDate`, `idUser`, `idType`)
         VALUES (:title, :description, :filename, :status, :priority, :openDate, :user, :type);";
         // Set an array with the binds values
         $arrayBinds = array(
