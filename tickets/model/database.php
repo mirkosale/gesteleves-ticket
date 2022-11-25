@@ -117,18 +117,19 @@ class Database {
     /**
      * Insert a user to the database
      */
-    public function insertTicket($title, $description, $status, $priority, $resolutionDate, $type){
+    public function insertTicket($title, $description, $status, $priority, $openDate, $user, $type){
         // Get the informations of the user
-        $queryRequest = "INSERT INTO `t_ticket` (`ticTitle`, `ticDescription`, `ticStatut`, `ticPriority`, `ticResolutionDate`, `ticOpenDate`, `idType`)
-        VALUES (:title, :description, :status, :priority, :resolutionDate, :type);";
+        $queryRequest = "INSERT INTO `t_ticket` (`ticTitle`, `ticDescription`, `ticFilename` , `idStatus`, `idPriority`, `ticOpenDate`, `idUser`, `idType`)
+        VALUES (:title, :description, :filename, :status, :priority, :openDate, :user, :type);";
         // Set an array with the binds values
         $arrayBinds = array(
             array("varName" => "title", "value" => $title, "type" => PDO::PARAM_STR),
             array("varName" => "description", "value" => $description, "type" => PDO::PARAM_STR),
-            array("varName" => "status", "value" => $title, "status" => PDO::PARAM_STR),
-            array("varName" => "priority", "value" => $title, "priority" => PDO::PARAM_STR),
-            array("varName" => "resolutionDate", "value" => $title, "resolutionDate" => PDO::PARAM_STR),
-            array("varName" => "openDate", "value" => $title, "openDate" => PDO::PARAM_STR),
+            array("varName" => "filename", "value" => $filename, "type" => PDO::PARAM_STR),
+            array("varName" => "status", "value" => $status, "type" => PDO::PARAM_STR),
+            array("varName" => "priority", "value" => $priority, "type" => PDO::PARAM_STR),
+            array("varName" => "openDate", "value" => $openDate, "type" => PDO::PARAM_STR),
+            array("varName" => "user", "value" => $user, "type" => PDO::PARAM_STR),
             array("varName" => "type", "value" => $type, "type" => PDO::PARAM_INT)
         );
         // Insert the user
