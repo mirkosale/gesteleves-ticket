@@ -8,7 +8,7 @@
     Document Title
     =============================================
     -->
-    <title>Titre</title>
+    <title>Gestion des élèves v2.4.1 - ETML</title>
     <!--  
     Stylesheets
     =============================================
@@ -18,5 +18,5 @@
     <!-- Default stylesheets-->
     <link href="../resources/css/bootstrap/bootstrap.css" rel="stylesheet">
     <!-- Custom css file-->
-    <link href="../resources/css/custom.css" rel="stylesheet">
+    <link rel="stylesheet" href="./resources/css/custom.css">
   </head>

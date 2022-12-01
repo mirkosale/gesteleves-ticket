@@ -31,7 +31,7 @@ class HomeController extends Controller {
      */
     private function homeAction() {
         
-        $view = file_get_contents('view/pages/ticketsMenu/menu.html');
+        $view = file_get_contents('view/pages/ticketsMenu/menu.php');
 
         ob_start();
         eval('?>' . $view);
