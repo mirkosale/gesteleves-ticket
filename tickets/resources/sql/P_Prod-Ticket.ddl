@@ -12,6 +12,7 @@
 -- Database Section
 -- ________________ 
 
+drop database if exists db_Tickets;
 create database db_Tickets;
 use db_Tickets;
 

@@ -117,15 +117,15 @@ class Database {
     /**
      * Insert a user to the database
      */
-    public function insertTicket($title, $description, $status, $priority, $openDate, $user, $type){
+    public function insertTicket($title, $description, $filepath, $status, $priority, $openDate, $user, $type){
         // Get the informations of the user
-        $queryRequest = "INSERT INTO `t_ticket` (`ticTitle`, `ticDescription`, `ticFilename` , `idStatus`, `idPriority`, `ticOpenDate`, `idUser`, `idType`)
+        $queryRequest = "INSERT INTO `t_ticket` (`ticTitle`, `ticDescription`, `ticFilepath` , `idStatus`, `idPriority`, `ticOpenDate`, `idUser`, `idType`)
         VALUES (:title, :description, :filename, :status, :priority, :openDate, :user, :type);";
         // Set an array with the binds values
         $arrayBinds = array(
             array("varName" => "title", "value" => $title, "type" => PDO::PARAM_STR),
             array("varName" => "description", "value" => $description, "type" => PDO::PARAM_STR),
-            array("varName" => "filename", "value" => $filename, "type" => PDO::PARAM_STR),
+            array("varName" => "filename", "value" => $filepath, "type" => PDO::PARAM_STR),
             array("varName" => "status", "value" => $status, "type" => PDO::PARAM_STR),
             array("varName" => "priority", "value" => $priority, "type" => PDO::PARAM_STR),
             array("varName" => "openDate", "value" => $openDate, "type" => PDO::PARAM_STR),
@@ -141,7 +141,7 @@ class Database {
      */
     public function selectOneTicket($id){
         // Get the informations of the user
-        $queryRequest = "SELECT * FROM t_ticket as `t` JOIN t_user as `u` on t.idUser = u.idUser WHERE idTicket = :id ";
+        $queryRequest = "SELECT * FROM t_ticket as `t` JOIN t_user as `u` on t.idUser = u.idUser JOIN t_priority as `p` on t.idPriority = p.idPriority JOIN t_status as `s` on t.idStatus = s.idStatus JOIN t_type as `y` on t.idType = y.idType WHERE idTicket = :id ";
         $binds = [
             ["name" => "id", "value" => $id, "type" => PDO::PARAM_INT]
         ];
