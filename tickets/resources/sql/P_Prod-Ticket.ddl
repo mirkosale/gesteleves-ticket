@@ -3,7 +3,7 @@
 -- *--------------------------------------------
 -- * DB-MAIN version: 11.0.2              
 -- * Generator date: Sep 14 2021              
--- * Generation date: Fri Nov 25 10:37:21 2022 
+-- * Generation date: Thu Dec  1 16:05:49 2022 
 -- * LUN file: F:\01-Projets\P_Prod-MIN3\Ticketing\P_Prod-Ticket.lun 
 -- * Schema: db_Tickets/mld 
 -- ********************************************* 
@@ -12,9 +12,9 @@
 -- Database Section
 -- ________________ 
 
-drop database if exists db_Tickets;
 create database db_Tickets;
 use db_Tickets;
+
 
 -- Tables Section
 -- _____________ 
@@ -24,6 +24,8 @@ create table t_intervene (
      idTechnician int not null,
      intDate date not null,
      intDescription varchar(32767) not null,
+     intVisibleClient char not null,
+     intFilePath char(255) not null,
      constraint ID_t_intervene_ID primary key (idTechnician, idTicket, intDate));
 
 create table t_priority (
@@ -35,6 +37,7 @@ create table t_priority (
 create table t_status (
      idStatus int not null auto_increment,
      staName varchar(255) not null,
+     staDescription char(32767) not null,
      constraint ID_t_status_ID primary key (idStatus));
 
 create table t_technician (
@@ -46,13 +49,13 @@ create table t_ticket (
      idTicket int not null auto_increment,
      ticTitle varchar(255) not null,
      ticDescription varchar(32767) not null,
-     ticFilename char(255) not null,
+     ticFilePath char(255) not null,
      ticOpenDate date not null,
      ticResolutionDate date,
-     idUser int not null,
-     idType int not null,
      idStatus int not null,
      idPriority int not null,
+     idUser int not null,
+     idType int not null,
      constraint ID_t_ticket_ID primary key (idTicket));
 
 create table t_type (
@@ -82,17 +85,17 @@ alter table t_ticket add constraint FKt_open_FK
      foreign key (idUser)
      references t_user (idUser);
 
-alter table t_ticket add constraint FKt_have_FK
-     foreign key (idType)
-     references t_type (idType);
+alter table t_ticket add constraint FKt_prioritize_FK
+     foreign key (idPriority)
+     references t_priority (idPriority);
 
 alter table t_ticket add constraint FKt_state_FK
      foreign key (idStatus)
      references t_status (idStatus);
 
-alter table t_ticket add constraint FKt_prioritize_FK
-     foreign key (idPriority)
-     references t_priority (idPriority);
+alter table t_ticket add constraint FKt_have_FK
+     foreign key (idType)
+     references t_type (idType);
 
 
 -- Index Section
@@ -119,20 +122,21 @@ create unique index ID_t_ticket_IND
 create index FKt_open_IND
      on t_ticket (idUser);
 
-create index FKt_have_IND
-     on t_ticket (idType);
+create index FKt_prioritize_IND
+     on t_ticket (idPriority);
 
 create index FKt_state_IND
      on t_ticket (idStatus);
 
-create index FKt_prioritize_IND
-     on t_ticket (idPriority);
+create index FKt_have_IND
+     on t_ticket (idType);
 
 create unique index ID_t_type_IND
      on t_type (idType);
 
 create unique index ID_t_user_IND
      on t_user (idUser);
+
 
 DROP USER IF EXISTS `dbTickets_user`@`localhost`;
 CREATE USER `dbTickets_user`@`localhost` identified by '.Etml-';
