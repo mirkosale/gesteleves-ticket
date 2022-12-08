@@ -141,7 +141,8 @@ class Database {
      */
     public function selectOneTicket($id){
         // Get the informations of the user
-        $queryRequest = "SELECT * FROM t_ticket as `t` JOIN t_user as `u` on t.idUser = u.idUser JOIN t_priority as `p` on t.idPriority = p.idPriority JOIN t_status as `s` on t.idStatus = s.idStatus JOIN t_type as `y` on t.idType = y.idType WHERE idTicket = :id ";
+        $queryRequest = "SELECT * FROM t_ticket as `tic` JOIN t_user as `u` on tic.idUser = u.idUser JOIN t_priority as `pri` on tic.idPriority = p.idPriority JOIN t_status as `stat` on tic.idStatus = stat.idStatus 
+        JOIN t_type as `y` on t.idType = y.idType JOIN t_interneve as `i` on tic.idTicket = i.idTicket JOIN t_technician as `tec` on i.idTechnican = tec.idTechnician WHERE idTicket = :id ";
         $binds = [
             ["name" => "id", "value" => $id, "type" => PDO::PARAM_INT]
         ];
@@ -150,6 +151,7 @@ class Database {
         //return the array
         return $usersReturned;
     }
+
 
     /**
      * Select last 10 tickets
@@ -161,6 +163,38 @@ class Database {
         $usersReturned = $this->querySimpleExecute($queryRequest);
         return $usersReturned;
     }
+
+    /**
+     * 
+     */
+    public function selectTicketsByUser($userId){
+        // Get the informations of the user
+        $queryRequest = "SELECT * FROM t_ticket WHERE `idUser` = :idUser";
+        $binds = [
+            ["name" => "userId", "value" => $userId, "type" => PDO::PARAM_INT]
+        ];
+        // Execute the request
+        $usersReturned = $this->queryPrepareExecute($queryRequest, $binds);
+        //return the array
+        return $usersReturned;   
+    }
+
+    public function selectAssignedTickets($technicianId){
+        $queryRequest = "SELECT * FROM t_ticket as `t` JOIN t_user as `u` on t.idUser = u.idUser JOIN t_priority as `p` on t.idPriority = p.idPriority JOIN t_status as `s` on t.idStatus = s.idStatus JOIN t_type as `y` on t.idType = y.idType WHERE idTicket = :id ";
+
+        $binds = [
+            ["name" => "userId", "value" => $userId, "type" => PDO::PARAM_INT]
+        ];
+        // Execute the request
+        $usersReturned = $this->queryPrepareExecute($queryRequest, $binds);
+        //return the array
+        return $usersReturned;   
+    }
+
+    public function checkUserLogin($username, $password){
+
+    }
+
 
     /**
      * Select last 10 tickets
