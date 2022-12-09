@@ -206,6 +206,18 @@ class Database {
         return $usersReturned;
     }
 
+     /**
+     * Get all the technicians from the database
+     */
+    public function getAllTechnicians(){
+        // Get the informations of the user
+        $queryRequest = "SELECT * FROM t_technicians";
+        // Execute the request
+        $usersReturned = $this->querySimpleExecute($queryRequest);
+        //return the array
+        return $usersReturned;
+    }
+
     /**
      * Select last 10 tickets
      */
