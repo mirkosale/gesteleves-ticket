@@ -13,5 +13,4 @@
 	<script src="./resources/js/bootstrap/js/dataTables.responsive.min.js"></script>
 	<script src="./resources/js/bootstrap/js/responsive.bootstrap4.min.js"></script>
 	<script src="./resources/js/bootstrap/dashboard.js"></script>
-
 </html>
