@@ -44,6 +44,7 @@ create table t_status (
 create table t_technician (
      idTechnician int not null auto_increment,
      tecName varchar(255) not null,
+     tecSuperUser char not null,
      constraint ID_t_technician_ID primary key (idTechnician));
 
 create table t_ticket (

@@ -71,6 +71,7 @@ class Database {
      */
     private function formatData($req){
         $array = $req->fetchAll(PDO::FETCH_ASSOC);
+        $this->unsetData($req);
         return $array;
     }
 
@@ -200,6 +201,18 @@ class Database {
     public function getAllUsers(){
         // Get the informations of the user
         $queryRequest = "SELECT * FROM t_users";
+        // Execute the request
+        $usersReturned = $this->querySimpleExecute($queryRequest);
+        //return the array
+        return $usersReturned;
+    }
+
+     /**
+     * Get all the technicians from the database
+     */
+    public function getAllTechnicians(){
+        // Get the informations of the user
+        $queryRequest = "SELECT * FROM t_technicians";
         // Execute the request
         $usersReturned = $this->querySimpleExecute($queryRequest);
         //return the array

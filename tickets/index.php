@@ -18,6 +18,8 @@ date_default_timezone_set('Europe/Zurich');
 
 include_once 'controller/Controller.php';
 include_once 'controller/HomeController.php';
+include_once 'controller/TicketController.php';
+include_once 'controller/UserController.php';
 include_once 'model/database.php';
 
 class MainController {
@@ -49,6 +51,12 @@ class MainController {
             case 'home':
                 $link = new HomeController();
                 break;
+            case 'tickets':
+                $link = new TicketController();
+                break;
+            case 'user':
+                $link = new UserController();
+                break;  
             default:
                 $link = new HomeController();
                 break;
