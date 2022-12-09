@@ -6,7 +6,7 @@
  * Controller for the user page
  */
 
-class UserController extends Controller {
+class TicketController extends Controller {
 
     /**
      * Dispatch current action
