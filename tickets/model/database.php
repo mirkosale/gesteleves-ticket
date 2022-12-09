@@ -10,11 +10,9 @@ include 'model/userInfos/userInfos.php';
 
 class Database {
     
-    
     // Variable de classe
     private $connector;
     private $connexionValues;
-
 
     public function __construct(){
         //Get the values from the php file for the pdo
@@ -137,12 +135,14 @@ class Database {
     }
 
     /**
-     * Select a ticket
+     * Select a ticket and all of it's full information
      */
     public function selectOneTicket($id){
         // Get the informations of the user
-        $queryRequest = "SELECT * FROM t_ticket as `tic` JOIN t_user as `u` on tic.idUser = u.idUser JOIN t_priority as `pri` on tic.idPriority = p.idPriority JOIN t_status as `stat` on tic.idStatus = stat.idStatus 
-        JOIN t_type as `y` on t.idType = y.idType JOIN t_interneve as `i` on tic.idTicket = i.idTicket JOIN t_technician as `tec` on i.idTechnican = tec.idTechnician WHERE idTicket = :id ";
+        $queryRequest = "SELECT * FROM t_ticket as `tic` JOIN t_user as `u` on tic.idUser = u.idUser 
+        JOIN t_priority as `pri` on tic.idPriority = pri.idPriority JOIN t_status as `stat` on tic.idStatus = stat.idStatus 
+        JOIN t_type as `y` on tic.idType = y.idType JOIN t_intervene as `i` on tic.idTicket = i.idTicket 
+        JOIN t_technician as `tec` on tec.idTechnician = i.idTechnician WHERE tic.idTicket = :id";
         $binds = [
             ["name" => "id", "value" => $id, "type" => PDO::PARAM_INT]
         ];
@@ -150,11 +150,11 @@ class Database {
         $usersReturned = $this->queryPrepareExecute($queryRequest, $binds);
         //return the array
         return $usersReturned;
+        
     }
 
-
     /**
-     * Select last 10 tickets
+     * Select last 10 created tickets 
      */
     public function selectLastTenTickets(){
         $queryRequest = "SELECT * FROM t_ticket ORDER BY ticOpenDate DESC LIMIT 10";
@@ -165,7 +165,7 @@ class Database {
     }
 
     /**
-     * 
+     * Select all the tickets that a user has made
      */
     public function selectTicketsByUser($userId){
         // Get the informations of the user
@@ -179,11 +179,14 @@ class Database {
         return $usersReturned;   
     }
 
-    public function selectAssignedTickets($technicianId){
-        $queryRequest = "SELECT * FROM t_ticket as `t` JOIN t_user as `u` on t.idUser = u.idUser JOIN t_priority as `p` on t.idPriority = p.idPriority JOIN t_status as `s` on t.idStatus = s.idStatus JOIN t_type as `y` on t.idType = y.idType WHERE idTicket = :id ";
+    /**
+     * Select all the tickets where a technician 
+     */
+    public function selectTicketsTakenByTechnician($technicianId){
+        $queryRequest = "SELECT * FROM t_intervene as `i` JOIN t_ticket as `tic` on i.idTicket = tic.idTicket JOIN t_technician as `tec` on tec.idTechnician = i.idTechnician WHERE i.idTechnician = :id GROUP BY t.idTicket";
 
         $binds = [
-            ["name" => "userId", "value" => $userId, "type" => PDO::PARAM_INT]
+            ["name" => "id", "value" => $technicianId, "type" => PDO::PARAM_INT]
         ];
         // Execute the request
         $usersReturned = $this->queryPrepareExecute($queryRequest, $binds);
@@ -191,10 +194,17 @@ class Database {
         return $usersReturned;   
     }
 
-    public function checkUserLogin($username, $password){
-
+    /**
+     * Get all the users from the database
+     */
+    public function getAllUsers(){
+        // Get the informations of the user
+        $queryRequest = "SELECT * FROM t_users";
+        // Execute the request
+        $usersReturned = $this->querySimpleExecute($queryRequest);
+        //return the array
+        return $usersReturned;
     }
-
 
     /**
      * Select last 10 tickets
