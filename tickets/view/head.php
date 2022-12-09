@@ -8,15 +8,15 @@
     Document Title
     =============================================
     -->
-    <title>Titre</title>
+    <title>Gesteleves wol</title>
+
     <!--  
     Stylesheets
     =============================================
-    
     -->
-
-    <!-- Default stylesheets-->
-    <link href="../resources/css/bootstrap/bootstrap.css" rel="stylesheet">
-    <!-- Custom css file-->
-    <link href="../resources/css/custom.css" rel="stylesheet">
+    <link type="text/css" href="./resources/css/media.css" rel="stylesheet">
+    <link type="text/css" href="./resources/css/core.css" rel="stylesheet">
+    <link type="text/css" href="./resources/css/style.css" rel="stylesheet">
+    <link type="text/css" href="./resources/css/bootstrap/dataTables.bootstrap4.min.css" rel="stylesheet">
+	  <link type="text/css" href="./resources/css/bootsrtap/responsive.bootstrap4.min.css" rel="stylesheet">
   </head>
