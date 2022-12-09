@@ -71,6 +71,7 @@ class Database {
      */
     private function formatData($req){
         $array = $req->fetchAll(PDO::FETCH_ASSOC);
+        $this->unsetData($req);
         return $array;
     }
 
