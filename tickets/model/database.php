@@ -196,6 +196,17 @@ class Database {
     }
 
     /**
+     * Select the 10 tickets with the highest priority
+     */
+    public function selectTenHighestPriorityTickets(){
+        $queryRequest = "SELECT * FROM t_ticket as `t` JOIN t_priority as `p` on t.idPriority = p.idPriority ORDER BY (priImpact * priUrgency) DESC LIMIT 10";
+
+        // Execute the request
+        $usersReturned = $this->querySimpleExecute($queryRequest);
+        return $usersReturned;
+    }
+
+    /**
      * Get all the users from the database
      */
     public function getAllUsers(){
@@ -218,16 +229,5 @@ class Database {
         //return the array
         return $usersReturned;
     }
-
-    /**
-     * Select last 10 tickets
-     */
-    public function selectTenHighestPriorityTickets(){
-        $queryRequest = "SELECT * FROM t_ticket ORDER BY ticPriority DESC LIMIT 10";
-
-        // Execute the request
-        $usersReturned = $this->querySimpleExecute($queryRequest);
-        return $usersReturned;
-    }
- }
+}
 ?>
