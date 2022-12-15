@@ -168,7 +168,7 @@ class Database {
     /**
      * Select all the tickets that a user has made
      */
-    public function selectTicketsByUser($userId){
+    public function getTicketsByUser($userId){
         // Get the informations of the user
         $queryRequest = "SELECT * FROM t_ticket WHERE `idUser` = :userId";
         $binds = [
@@ -183,7 +183,7 @@ class Database {
     /**
      * Select all the tickets where a technician 
      */
-    public function selectTicketsTakenByTechnician($technicianId){
+    public function getTicketsTakenByTechnician($technicianId){
         $queryRequest = "SELECT * FROM t_intervene as `i` JOIN t_ticket as `tic` on i.idTicket = tic.idTicket JOIN t_technician as `tec` on tec.idTechnician = i.idTechnician WHERE i.idTechnician = :id GROUP BY t.idTicket";
 
         $binds = [
@@ -198,7 +198,7 @@ class Database {
     /**
      * Select the 10 tickets with the highest priority
      */
-    public function selectTenHighestPriorityTickets(){
+    public function getTenHighestPriorityTickets(){
         $queryRequest = "SELECT * FROM t_ticket as `t` JOIN t_priority as `p` on t.idPriority = p.idPriority ORDER BY (priImpact * priUrgency) DESC LIMIT 10";
 
         // Execute the request
@@ -208,8 +208,38 @@ class Database {
 
     /**
      * Get all the users from the database
+     * 
+     * Note : to be deleted and replaced by a function that replaces it by getting a user from the Active Directory using LDAP commands
      */
-    public function getSingleUsers($username){
+    public function getAllTypes(){
+        // Get the informations of the user
+        $queryRequest = "SELECT * FROM t_type";
+        // Execute the request
+        $usersReturned = $this->querySimpleExecute($queryRequest);
+        //return the array
+        return $usersReturned;
+    }
+
+    /**
+     * Get all the priorities from the database
+     * 
+     * Note : to be deleted and replaced by a function that replaces it by getting a user from the Active Directory using LDAP commands
+     */
+    public function getAllPriorities(){
+        // Get the informations of the user
+        $queryRequest = "SELECT * FROM t_priority";
+        // Execute the request
+        $usersReturned = $this->querySimpleExecute($queryRequest);
+        //return the array
+        return $usersReturned;
+    }
+
+    /**
+     * Get all the users from the database
+     * 
+     * Note : to be deleted and replaced by a function that replaces it by getting a user from the Active Directory using LDAP commands
+     */
+    public function getSingleUserByName($username){
         // Get the informations of the user
         $queryRequest = "SELECT * FROM t_users as `use` WHERE use.useName = :username";
 
@@ -218,7 +248,7 @@ class Database {
         ];
 
         // Execute the request
-        $usersReturned = $this->queryPrepareExecute($queryRequest $binds);
+        $usersReturned = $this->queryPrepareExecute($queryRequest, $binds);
         //return the array
         return $usersReturned;
     }
@@ -234,17 +264,23 @@ class Database {
         //return the array
         return $usersReturned;
     }
-
-    public function getUserHash($username){
-        $queryRequest = "SELECT usePassword FROM t_user as `use` WHERE use.useName = :username";
-
+    
+    /**
+     * Insert user into the database
+     * 
+     * Note : to be deleted because you don't create users via this, but into the Active Directory
+     */
+    public function insertUser($username, $password){
+        // Get the informations of the user
+        $queryRequest = "INSERT INTO t_users (useName, usePassword) VALUES (:username, :password);";
         $binds = [
-            ["username" => $username, "type" => PDO::PARAM_STR]
+            ["name" => "username", "value" => $username, "type" => PDO::PARAM_INT],
+            ["name" => "password", "value" => $password, "type" => PDO::PARAM_INT]
         ];
-
-        $userHash = $this->queryPrepareExecute($queryRequest, $binds);
-
-        return $userHash;
+        // Execute the request
+        $usersReturned = $this->queryPrepareExecute($queryRequest, $binds);
+        //return the array
+        return $usersReturned;
     }
 }
 ?>
