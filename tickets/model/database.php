@@ -118,17 +118,17 @@ class Database {
      */
     public function insertTicket($title, $description, $filepath, $status, $priority, $openDate, $user, $type){
         // Get the informations of the user
-        $queryRequest = "INSERT INTO `t_ticket` (`ticTitle`, `ticDescription`, `ticFilepath` , `idStatus`, `idPriority`, `ticOpenDate`, `idUser`, `idType`)
-        VALUES (:title, :description, :filename, :status, :priority, :openDate, :user, :type);";
+        $queryRequest = "INSERT INTO `t_ticket` (`ticTitle`, `ticDescription`,`ticFilepath`, `ticOpenDate`, `idStatus`, `idPriority`,`idUser`, `idType`)
+        VALUES (:title, :description, :filename, :openDate, :status, :priority, :user, :type);";
         // Set an array with the binds values
         $arrayBinds = array(
             array("varName" => "title", "value" => $title, "type" => PDO::PARAM_STR),
             array("varName" => "description", "value" => $description, "type" => PDO::PARAM_STR),
             array("varName" => "filename", "value" => $filepath, "type" => PDO::PARAM_STR),
-            array("varName" => "status", "value" => $status, "type" => PDO::PARAM_STR),
-            array("varName" => "priority", "value" => $priority, "type" => PDO::PARAM_STR),
             array("varName" => "openDate", "value" => $openDate, "type" => PDO::PARAM_STR),
-            array("varName" => "user", "value" => $user, "type" => PDO::PARAM_STR),
+            array("varName" => "status", "value" => $status, "type" => PDO::PARAM_INT),
+            array("varName" => "priority", "value" => $priority, "type" => PDO::PARAM_INT),
+            array("varName" => "user", "value" => $user, "type" => PDO::PARAM_INT),
             array("varName" => "type", "value" => $type, "type" => PDO::PARAM_INT)
         );
         // Insert the user
@@ -264,7 +264,7 @@ class Database {
         //return the array
         return $usersReturned;
     }
-    
+
     /**
      * Insert user into the database
      * 
