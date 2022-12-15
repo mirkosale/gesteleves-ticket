@@ -104,4 +104,10 @@ class UserController extends Controller
 
         header('Location: index.php');
     }
+
+    private function checkUserLogin(){
+        $username = $_SESSION['username'];
+        $password = $_SESSION['password'];
+        return password_verify($password, $database->getUserHash($username));
+    }
 }
