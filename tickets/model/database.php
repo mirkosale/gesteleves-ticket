@@ -170,7 +170,7 @@ class Database {
      */
     public function selectTicketsByUser($userId){
         // Get the informations of the user
-        $queryRequest = "SELECT * FROM t_ticket WHERE `idUser` = :idUser";
+        $queryRequest = "SELECT * FROM t_ticket WHERE `idUser` = :userId";
         $binds = [
             ["name" => "userId", "value" => $userId, "type" => PDO::PARAM_INT]
         ];
@@ -209,11 +209,16 @@ class Database {
     /**
      * Get all the users from the database
      */
-    public function getAllUsers(){
+    public function getSingleUsers($username){
         // Get the informations of the user
-        $queryRequest = "SELECT * FROM t_users";
+        $queryRequest = "SELECT * FROM t_users as `use` WHERE use.useName = :username";
+
+        $binds = [
+            ["username" => $username, "type" => PDO::PARAM_STR]
+        ];
+
         // Execute the request
-        $usersReturned = $this->querySimpleExecute($queryRequest);
+        $usersReturned = $this->queryPrepareExecute($queryRequest $binds);
         //return the array
         return $usersReturned;
     }
@@ -228,6 +233,18 @@ class Database {
         $usersReturned = $this->querySimpleExecute($queryRequest);
         //return the array
         return $usersReturned;
+    }
+
+    public function getUserHash($username){
+        $queryRequest = "SELECT usePassword FROM t_user as `use` WHERE use.useName = :username";
+
+        $binds = [
+            ["username" => $username, "type" => PDO::PARAM_STR]
+        ];
+
+        $userHash = $this->queryPrepareExecute($queryRequest, $binds);
+
+        return $userHash;
     }
 }
 ?>
