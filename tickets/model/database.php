@@ -116,7 +116,7 @@ class Database {
     /**
      * Insert a user to the database
      */
-    public function insertTicket($title, $description, $filepath, $status, $priority, $openDate, $user, $type){
+    public function insertTicket($title, $description, $filepath, $openDate, $status, $priority, $user, $type){
         // Get the informations of the user
         $queryRequest = "INSERT INTO `t_ticket` (`ticTitle`, `ticDescription`,`ticFilepath`, `ticOpenDate`, `idStatus`, `idPriority`,`idUser`, `idType`)
         VALUES (:title, :description, :filename, :openDate, :status, :priority, :user, :type);";

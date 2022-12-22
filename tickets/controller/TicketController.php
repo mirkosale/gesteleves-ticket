@@ -31,7 +31,7 @@ class TicketController extends Controller {
      */
     private function createAction() 
     {        
-        #Check de si l'utilisateur est connecté
+        #Check que l'utilisateur soit connecté
         if (!isset($_SESSION['username'])) {
             $view = file_get_contents('view/page/user/notLogged.php');
         }
@@ -41,7 +41,6 @@ class TicketController extends Controller {
             $database = new Database();
 
             $types = $database->getAllTypes();
-
             $priorities = $database->getAllPriorities();
 
             $view = file_get_contents('view/pages/ticket/create.html');
@@ -52,6 +51,64 @@ class TicketController extends Controller {
         $content = ob_get_clean();
 
         return $content;
+    }
+
+    /**
+     * Display ticket creation
+     *
+     * @return string
+     */
+    private function checkCreateAction() 
+    {      
+        #Check de si la page a été accédée via le formulaire
+        if (isset($_POST['btnSubmit'])) {
+            $view = file_get_contents('view/page/recipe/noSubmit.php');
+        }
+        else 
+        {
+            $errors = array();
+
+            $title = htmlspecialchars($_POST["name"]);
+            $description = htmlspecialchars($_POST["description"]);
+            $filepath = htmlspecialchars($_POST["filepath"]);
+            $openDate = date('Y-M-d');
+            $status = 1; //open
+            $priority = htmlspecialchars($_POST["priority"]);
+            $user = htmlspecialchars($_POST["user"]);
+            $type = htmlspecialchars($_POST["type"]);
+
+            if (!isset($title) || empty($title)) {
+                $errors[] = "Vous devez entrer un titre de votre ticket";
+            }
+
+            if (!isset($description) || empty($description)) {
+                $errors[] = "Vous devez entrer une description de votre ticket";
+            }
+
+            if (!isset($priority) || empty($priority)) {
+                $errors[] = "Vous devez mettre une priorité à votre ticket";
+            }
+
+            if (!isset($type) || empty($type)) {
+                $errors[] = "Vous devez choisir une catégorie pour votre ticket";
+            }
+
+            if (empty($errors)) {
+                $database = new Database();
+                $database->insertTicket($title, $description, $filepath, $openDate, $status, $priority, $user, $type);
+                header('Location: index.php');
+                die();
+            } else {
+                $view = file_get_contents('view/page/home/errors.php');
+            } 
+        }
+      
+        ob_start();
+        eval('?>' . $view);
+        $content = ob_get_clean();
+
+        return $content;
+        
     }
 
     /**
