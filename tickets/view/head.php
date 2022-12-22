@@ -20,3 +20,4 @@
     <link type="text/css" href="./resources/css/bootstrap/dataTables.bootstrap4.min.css" rel="stylesheet">
 	  <link type="text/css" href="./resources/css/bootsrtap/responsive.bootstrap4.min.css" rel="stylesheet">
   </head>
+  
