@@ -20,7 +20,7 @@ class TicketController extends Controller {
         try {
             return call_user_func(array($this, $action));
         } catch (\Throwable $th) {
-            return call_user_func(array($this, "userAction"));
+            return call_user_func(array($this, "ticketAction"));
         }
     }
 
@@ -31,7 +31,7 @@ class TicketController extends Controller {
      */
     private function ticketCreateAction() {
         
-        $view = file_get_contents('view/pages/ticket/create.html');
+        $view = file_get_contents('view/pages/ticket/createTicket.php');
 
         ob_start();
         eval('?>' . $view);
