@@ -87,6 +87,15 @@ p {
 	margin: 0 0 15px 0;
 	padding: 0;
 }
+
+.center{
+	text-align: center;
+}
+
+.align-bas{
+	display: block;
+}
+
 .slick-slide{
 	outline: none !important;
 }
@@ -688,9 +697,6 @@ textarea.form-control{
 .custom-checkbox .custom-control-input:disabled:checked ~ .custom-control-label::before{
 	border: 2px solid rgba(0, 123, 255, 0);
 }
-
-
-
 .select2-container .select2-selection--single{
 	height: 45px;
 	border-color: #d4d4d4;

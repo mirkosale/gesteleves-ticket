@@ -51,7 +51,7 @@ class MainController {
             case 'home':
                 $link = new HomeController();
                 break;
-            case 'tickets':
+            case 'ticket':
                 $link = new TicketController();
                 break;
             case 'user':
