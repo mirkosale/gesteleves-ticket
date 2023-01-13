@@ -38,7 +38,7 @@ create table t_priority (
 create table t_status (
      idStatus int not null auto_increment,
      staName varchar(255) not null,
-     staDescription char(32767) not null,
+     staDescription varchar(32767) not null,
      constraint ID_t_status_ID primary key (idStatus));
 
 create table t_technician (

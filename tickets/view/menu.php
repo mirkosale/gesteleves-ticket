@@ -25,7 +25,7 @@
         <div class="sidebar-menu">
             <ul id="accordion-menu">
                 <li>
-                    <a href="calendar.html" class="dropdown-toggle no-arrow">
+                    <a href="index.php?controller=home&action=home" class="dropdown-toggle no-arrow">
                         <span class="micon dw dw-calendar1"></span><span class="mtext">Page d'accueil</span>
                     </a>
                 </li>
