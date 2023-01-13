@@ -47,11 +47,11 @@ class UserController extends Controller
     {
         //Check de si la page de check a été accédée via le formulaire
         if (isset($_POST['btnSubmit'])) {
-            $username = htmlspecialchars($_POST['user']);
+            $username = htmlspecialchars($_POST['username']);
             $password = htmlspecialchars($_POST['password']);
 
             $database = new Database();
-            $users = $database->getAllUsers();
+            $users = $database->getSingleUserByName($username);
 
             //Check de si les informations entrées correspondent aux informations d'un utilisateur
             foreach ($users as $user) {

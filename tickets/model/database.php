@@ -118,17 +118,17 @@ class Database {
      */
     public function insertTicket($title, $description, $filepath, $status, $priority, $openDate, $user, $type){
         // Get the informations of the user
-        $queryRequest = "INSERT INTO `t_ticket` (`ticTitle`, `ticDescription`, `ticFilepath` , `idStatus`, `idPriority`, `ticOpenDate`, `idUser`, `idType`)
-        VALUES (:title, :description, :filename, :status, :priority, :openDate, :user, :type);";
+        $queryRequest = "INSERT INTO `t_ticket` (`ticTitle`, `ticDescription`,`ticFilepath`, `ticOpenDate`, `idStatus`, `idPriority`,`idUser`, `idType`)
+        VALUES (:title, :description, :filename, :openDate, :status, :priority, :user, :type);";
         // Set an array with the binds values
         $arrayBinds = array(
             array("varName" => "title", "value" => $title, "type" => PDO::PARAM_STR),
             array("varName" => "description", "value" => $description, "type" => PDO::PARAM_STR),
             array("varName" => "filename", "value" => $filepath, "type" => PDO::PARAM_STR),
-            array("varName" => "status", "value" => $status, "type" => PDO::PARAM_STR),
-            array("varName" => "priority", "value" => $priority, "type" => PDO::PARAM_STR),
             array("varName" => "openDate", "value" => $openDate, "type" => PDO::PARAM_STR),
-            array("varName" => "user", "value" => $user, "type" => PDO::PARAM_STR),
+            array("varName" => "status", "value" => $status, "type" => PDO::PARAM_INT),
+            array("varName" => "priority", "value" => $priority, "type" => PDO::PARAM_INT),
+            array("varName" => "user", "value" => $user, "type" => PDO::PARAM_INT),
             array("varName" => "type", "value" => $type, "type" => PDO::PARAM_INT)
         );
         // Insert the user
@@ -168,9 +168,9 @@ class Database {
     /**
      * Select all the tickets that a user has made
      */
-    public function selectTicketsByUser($userId){
+    public function getTicketsByUser($userId){
         // Get the informations of the user
-        $queryRequest = "SELECT * FROM t_ticket WHERE `idUser` = :idUser";
+        $queryRequest = "SELECT * FROM t_ticket WHERE `idUser` = :userId";
         $binds = [
             ["name" => "userId", "value" => $userId, "type" => PDO::PARAM_INT]
         ];
@@ -183,7 +183,7 @@ class Database {
     /**
      * Select all the tickets where a technician 
      */
-    public function selectTicketsTakenByTechnician($technicianId){
+    public function getTicketsTakenByTechnician($technicianId){
         $queryRequest = "SELECT * FROM t_intervene as `i` JOIN t_ticket as `tic` on i.idTicket = tic.idTicket JOIN t_technician as `tec` on tec.idTechnician = i.idTechnician WHERE i.idTechnician = :id GROUP BY t.idTicket";
 
         $binds = [
@@ -198,7 +198,7 @@ class Database {
     /**
      * Select the 10 tickets with the highest priority
      */
-    public function selectTenHighestPriorityTickets(){
+    public function getTenHighestPriorityTickets(){
         $queryRequest = "SELECT * FROM t_ticket as `t` JOIN t_priority as `p` on t.idPriority = p.idPriority ORDER BY (priImpact * priUrgency) DESC LIMIT 10";
 
         // Execute the request
@@ -208,12 +208,47 @@ class Database {
 
     /**
      * Get all the users from the database
+     * 
+     * Note : to be deleted and replaced by a function that replaces it by getting a user from the Active Directory using LDAP commands
      */
-    public function getAllUsers(){
+    public function getAllTypes(){
         // Get the informations of the user
-        $queryRequest = "SELECT * FROM t_users";
+        $queryRequest = "SELECT * FROM t_type";
         // Execute the request
         $usersReturned = $this->querySimpleExecute($queryRequest);
+        //return the array
+        return $usersReturned;
+    }
+
+    /**
+     * Get all the priorities from the database
+     * 
+     * Note : to be deleted and replaced by a function that replaces it by getting a user from the Active Directory using LDAP commands
+     */
+    public function getAllPriorities(){
+        // Get the informations of the user
+        $queryRequest = "SELECT * FROM t_priority";
+        // Execute the request
+        $usersReturned = $this->querySimpleExecute($queryRequest);
+        //return the array
+        return $usersReturned;
+    }
+
+    /**
+     * Get all the users from the database
+     * 
+     * Note : to be deleted and replaced by a function that replaces it by getting a user from the Active Directory using LDAP commands
+     */
+    public function getSingleUserByName($username){
+        // Get the informations of the user
+        $queryRequest = "SELECT * FROM t_users as `use` WHERE use.useName = :username";
+
+        $binds = [
+            ["username" => $username, "type" => PDO::PARAM_STR]
+        ];
+
+        // Execute the request
+        $usersReturned = $this->queryPrepareExecute($queryRequest, $binds);
         //return the array
         return $usersReturned;
     }
@@ -226,6 +261,24 @@ class Database {
         $queryRequest = "SELECT * FROM t_technicians";
         // Execute the request
         $usersReturned = $this->querySimpleExecute($queryRequest);
+        //return the array
+        return $usersReturned;
+    }
+
+    /**
+     * Insert user into the database
+     * 
+     * Note : to be deleted because you don't create users via this, but into the Active Directory
+     */
+    public function insertUser($username, $password){
+        // Get the informations of the user
+        $queryRequest = "INSERT INTO t_users (useName, usePassword) VALUES (:username, :password);";
+        $binds = [
+            ["name" => "username", "value" => $username, "type" => PDO::PARAM_INT],
+            ["name" => "password", "value" => $password, "type" => PDO::PARAM_INT]
+        ];
+        // Execute the request
+        $usersReturned = $this->queryPrepareExecute($queryRequest, $binds);
         //return the array
         return $usersReturned;
     }

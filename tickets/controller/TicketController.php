@@ -3,7 +3,7 @@
  * ETML
  * Auteur : Jonathan Dale
  * Date: 09.12.2022
- * Controller for the user page
+ * Controller for the ticket handling
  */
 
 class TicketController extends Controller {
@@ -30,8 +30,25 @@ class TicketController extends Controller {
      * @return string
      */
     private function ticketCreateAction() {
-        
         $view = file_get_contents('view/pages/ticket/createTicket.php');
+    }
+    private function createAction() 
+    {        
+        #Check de si l'utilisateur est connecté
+        if (!isset($_SESSION['username'])) {
+            $view = file_get_contents('view/page/user/notLogged.php');
+        }
+
+        #Check de si une erreur a été trouvée
+        if (!isset($view)) {
+            $database = new Database();
+
+            $types = $database->getAllTypes();
+
+            $priorities = $database->getAllPriorities();
+
+            $view = file_get_contents('view/pages/ticket/create.html');
+        }
 
         ob_start();
         eval('?>' . $view);
