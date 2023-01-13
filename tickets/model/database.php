@@ -9,7 +9,6 @@
 include 'model/userInfos/userInfos.php';
 
 class Database {
-    
     // Variable de classe
     private $connector;
     private $connexionValues;
@@ -87,7 +86,7 @@ class Database {
     /**
      * Select all the users
      */
-    public function testeSipmle(){
+    public function testSimple(){
         // Get the informations of the user
         $queryRequest = "SELECT * FROM t_users";
         // Execute the request
@@ -230,4 +229,3 @@ class Database {
         return $usersReturned;
     }
 }
-?>

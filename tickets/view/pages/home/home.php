@@ -84,51 +84,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Jonathan Dale</td>
-                        <td>Écran marbré</td>
-                        <td>Matériel</td>
-                        <td>En cours</td>
-                        <td>Dimitri Lymberis</td>
-                        <td>3</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>Simon Bae</td>
-                        <td>Tout cassé</td>
-                        <td>Matériel</td>
-                        <td>Nouveau ticket</td>
-                        <td>Personne</td>
-                        <td>3</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>Ben Tom</td>
-                        <td>J'arrive pas à me connecter</td>
-                        <td>Technique</td>
-                        <td>En attente</td>
-                        <td>Karim Bourahla</td>
-                        <td>3</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>Jonathan Dale</td>
-                        <td>Écran marbré</td>
-                        <td>Matériel</td>
-                        <td>En cours</td>
-                        <td>Dimitri Lymberis</td>
-                        <td>2</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>Jonathan Dale</td>
-                        <td>Écran marbré</td>
-                        <td>Matériel</td>
-                        <td>En cours</td>
-                        <td>Dimitri Lymberis</td>
-                        <td>2</td>
-                        <td>3</td>
-                    </tr>
+                    <?php
+                    $tickets = $database->selectLastTenTickets();
+                    foreach($tickets as $ticket)
+                    {
+                        echo "<tr><td>$database['ticTitle']</td></tr>"
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
