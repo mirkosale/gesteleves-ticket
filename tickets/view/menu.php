@@ -40,7 +40,7 @@
                 </li>
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon dw dw-apartment"></span><span class="mtext">Etudiants</span>
+                        <span class="micon dw dw-apartment"></span><span class="mtext">Classes</span>
                     </a>
                     <ul class="submenu">
                         <li><a href="ui-buttons.html">Liste classes</a></li>

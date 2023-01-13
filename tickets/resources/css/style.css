@@ -8,6 +8,34 @@
 ==============================================================*/
 
 /*==============================================================
+	Personal CSS Start
+==============================================================*/
+.titlePriority{
+	margin-right: 15px;
+}
+.contentPriority{
+	width: 800px;
+}
+.contentCheckbox{
+	width: 700px;
+}
+.contentCheckbox div{
+	margin-left: 10px;
+}
+.contentCrateTicket{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+.buttonSubmit{
+	margin-left: 17px;
+}
+
+/*==============================================================
+	Personal CSS End
+==============================================================*/
+
+/*==============================================================
 	Common Styles Initials
 ==============================================================*/
 html {
